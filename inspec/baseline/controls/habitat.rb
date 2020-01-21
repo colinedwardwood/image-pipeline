@@ -16,14 +16,19 @@
 # This control should check to see if habitat is installed and running on target system.
 # 
 
-# control 'habitat' do
-#   impact 1.0
-#   title 'shrug'
-#   desc 'shrug description'
-#   describe habitat_service(origin: 'core', name: 'httpd') do
-#     it                     { should exist }
-#     # its('version')         { should eq '2.4.35'}
-#     # its('topology')        { should eq 'standalone' }
-#     # its('update_strategy') { should eq 'none' }
-#   end
-# end
+control 'habitat' do
+  impact 1.0
+  title 'habitat installation tests'
+  desc 'verify the necessary steps have been completed to install, configure and start the habitat supervisor'
+  describe group('hab') do
+    it { should exist }
+  end
+  describe user('hab') do
+    it { should exist }
+    its('group') { should eq 'hab' }
+  end
+  describe file('/tmp/install_hab.sh') do
+    it { should exist }
+    it { should be_executable }
+  end
+end

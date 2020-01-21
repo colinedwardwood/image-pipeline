@@ -5,8 +5,19 @@
   },
   "provisioners": [
     {
+      "type": "file",
+      "source": "templates/install_hab.sh",
+      "destination": "/tmp/install_hab.sh"
+    },
+    {
       "type": "shell",
-      "inline": ["pwd"]
+      "inline": ["sudo rm -rf /etc/machine-id",
+        "sudo systemd-machine-id-setup",
+        "sudo hostname permanent-peer",
+        "sudo groupadd hab",
+        "sudo adduser hab -g hab",
+        "chmod +x /tmp/install_hab.sh"
+      ]
     },
     {
       "type": "inspec",
