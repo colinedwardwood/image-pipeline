@@ -8,6 +8,6 @@ summary: Test suite for baseline image
 version: 0.1.0
 supports:
   - os-family: linux
-depends:
-  - name: inspec-habitat
-    url: https://github.com/inspec/inspec-habitat/archive/master.tar.gz
+# depends:
+#   - name: inspec-habitat
+#     url: https://github.com/inspec/inspec-habitat/archive/master.tar.gz
