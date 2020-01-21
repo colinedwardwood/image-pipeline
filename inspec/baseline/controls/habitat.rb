@@ -27,9 +27,3 @@
 #     # its('update_strategy') { should eq 'none' }
 #   end
 # end
-
-control 'my-test-control' do
-  describe package ('glibc') do
-    it { should be_installed }
-  end
-end
