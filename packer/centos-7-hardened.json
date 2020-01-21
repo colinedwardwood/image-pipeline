@@ -5,6 +5,10 @@
   },
   "provisioners": [
     {
+      "type": "shell",
+      "inline": ["pwd"]
+    },
+    {
       "type": "inspec",
       "profile": "../inspec/baseline"
     }
