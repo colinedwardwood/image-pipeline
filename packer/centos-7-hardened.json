@@ -6,7 +6,7 @@
   "provisioners": [
     {
       "type": "inspec",
-      "profile": "https://github.com/dev-sec/linux-baseline"
+      "profile": "../inspec/baseline"
     }
   ],
   "builders": [{
