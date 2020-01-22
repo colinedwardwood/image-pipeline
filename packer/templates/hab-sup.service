@@ -1,0 +1,10 @@
+[Unit]
+Description=Habitat Supervisor
+
+[Service]
+Environment="HAB_FEAT_EVENT_STREAM=1"
+ExecStartPre=/bin/bash -c /bin/systemctl
+ExecStart=/bin/hab run --auto-update --listen-gossip 0.0.0.0:9638 --listen-http 0.0.0.0:9631 --permanent-peer
+
+[Install]
+WantedBy=default.target

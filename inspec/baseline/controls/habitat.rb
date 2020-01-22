@@ -31,4 +31,8 @@ control 'habitat' do
     it { should exist }
     it { should be_executable }
   end
+  describe systemd_service('hab-sup') do
+    it { should be_installed }
+    it { should be_enabled }
+  end
 end

@@ -1,7 +1,10 @@
 {
   "variables": {
     "aws_access_key": "",
-    "aws_secret_key": ""
+    "aws_secret_key": "",
+    "aws_ami_user": "centos",
+    "sleep_duration": "60",
+    "event_stream_env_var": "Environment=\"HAB_FEAT_EVENT_STREAM=1\""
   },
   "provisioners": [
     {
@@ -10,13 +13,24 @@
       "destination": "/tmp/install_hab.sh"
     },
     {
+      "type": "file",
+      "source": "templates/hab-sup.service",
+      "destination": "/home/{{user `aws_ami_user`}}/hab-sup.service"
+    },
+    {
       "type": "shell",
       "inline": ["sudo rm -rf /etc/machine-id",
         "sudo systemd-machine-id-setup",
         "sudo hostname permanent-peer",
         "sudo groupadd hab",
         "sudo adduser hab -g hab",
-        "chmod +x /tmp/install_hab.sh"
+        "chmod +x /tmp/install_hab.sh",
+        "sudo /tmp/install_hab.sh",
+        "sudo hab license accept",
+        "sudo hab pkg install core/hab-sup",
+        "sudo mv /home/{{user `aws_ami_user`}}/hab-sup.service /etc/systemd/system/hab-sup.service",
+        "sudo systemctl daemon-reload",
+        "sudo systemctl enable hab-sup"
       ]
     },
     {
@@ -39,7 +53,7 @@
       "most_recent": true
     },
     "instance_type": "t2.micro",
-    "ssh_username": "centos",
+    "ssh_username": "{{user `aws_ami_user`}}",
     "ami_name": "centos-7-hardened-{{timestamp}}"
   }]
 }
